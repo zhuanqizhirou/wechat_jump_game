@@ -62,9 +62,10 @@ def jump(distance):
         press_time = int(press_time)+1
     else:
         press_time = int(press_time)
-    if press_time < 200:
+    if press_time < 160: #太小，重试
         print('press_time is too small %d' % press_time)
-        exit()
+        return
+        #exit()
     #press_time = max(press_time, 250)   # 设置 200 ms 是最小的按压时间
     #press_time = 200
     print('press_time %s' % press_time)
