@@ -26,7 +26,7 @@ from shutil import copyfile
 
 # Magic Number，不设置可能无法正常执行，请根据具体截图从上到下按需设置
 under_game_score_y = 365     # 截图中刚好低于分数显示区域的 Y 坐标，300 是 1920x1080 的值，2K 屏、全面屏请根据实际情况修改
-press_coefficient = 1.37    # 长按的时间系数，请自己根据实际情况调节
+press_coefficient = 1.36    # 长按的时间系数，请自己根据实际情况调节
 swipe_x1, swipe_y1, swipe_x2, swipe_y2 = 540, 1400, 540, 1400     # 模拟按压的起始点坐标，需要自动重复游戏请设置成“再来一局”的坐标
 piece_base_height_1_2 = 20   # 二分之一的棋子底座高度，可能要调节
 piece_body_width = 70       # 棋子的宽度，比截图中量到的稍微大一点比较安全，可能要调节
@@ -52,14 +52,21 @@ def backup_screenshot(ts):
 def jump(distance):
     
     print("distance: %s" % distance)
-    if distance < 100:
+    if distance < 50:
         print("distance is too small")
         exit()
     press_time = distance * press_coefficient
     print('press_time %s' % press_time)
-    press_time = max(press_time, 300)   # 设置 200 ms 是最小的按压时间
-    press_time = int(press_time)
-    # press_time = 300
+    
+    if float('0.'+str(press_time)[0:6].split(".")[1][0:2])>0.8:
+        press_time = int(press_time)+1
+    else:
+        press_time = int(press_time)
+    if press_time < 200:
+        print('press_time is too small %d' % press_time)
+        exit()
+    #press_time = max(press_time, 250)   # 设置 200 ms 是最小的按压时间
+    #press_time = 200
     print('press_time %s' % press_time)
     cmd = 'adb shell input swipe {} {} {} {} {}'.format(swipe_x1, swipe_y1, swipe_x2, swipe_y2, press_time)
     # print(cmd)
