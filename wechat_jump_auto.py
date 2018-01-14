@@ -138,9 +138,9 @@ def main():
         print(ts, piece_x, piece_y, board_x, board_y)
         jump(math.sqrt(abs(board_x - piece_x) ** 2 + abs(board_y - piece_y) ** 2))
         backup_screenshot(ts)
-        #time.sleep(random.uniform(2, 3))   # 为了保证截图的时候应落稳了，多延迟一会儿
+        time.sleep(random.uniform(0.6, 1))   # 为了保证截图的时候应落稳了，多延迟一会儿
         print("sleep-----------------------")
-        time.sleep(0.6)
+        #time.sleep(0.6)
 
 
 if __name__ == '__main__':
